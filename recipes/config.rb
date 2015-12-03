@@ -89,7 +89,13 @@ template ::File.join(node['cassandra']['conf_dir'], 'cassandra-rackdc.properties
   only_if { node['cassandra'].attribute?('rackdc') }
 end
 
+
 # add aws config file
+directory 'home/ec2-user/.aws' do
+  mode '0775'
+  action :create
+end
+
 template '/home/ec2-user/.aws/config' do
   source 'config.erb'
   mode '0600'
