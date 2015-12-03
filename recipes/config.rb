@@ -90,7 +90,7 @@ template ::File.join(node['cassandra']['conf_dir'], 'cassandra-rackdc.properties
 end
 
 # add aws config file
-template 'home/ec2-user/.aws/config' do
+template '/home/ec2-user/.aws/config' do
   source 'config.erb'
   mode '0600'
 end
