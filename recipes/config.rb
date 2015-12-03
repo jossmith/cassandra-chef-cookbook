@@ -98,7 +98,10 @@ end
 
 template '/home/ec2-user/.aws/config' do
   source 'config.erb'
+  owner 'ec2-user'
+  group 'ec2-user'  
   mode '0600'
+  action :create
 end
 
 

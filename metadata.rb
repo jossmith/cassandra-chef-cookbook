@@ -4,7 +4,7 @@ maintainer_email 'michael@clojurewerkz.org'
 license 'Apache 2.0'
 description 'Installs/configures Apache Cassandra'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version '5.2'
+version '5.3'
 depends 'java'
 depends 'ulimit'
 depends 'apt'
