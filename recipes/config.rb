@@ -89,6 +89,13 @@ template ::File.join(node['cassandra']['conf_dir'], 'cassandra-rackdc.properties
   only_if { node['cassandra'].attribute?('rackdc') }
 end
 
+# add aws config file
+template '~/.aws/config' do
+  source 'config.erb'
+  mode '0600'
+end
+
+
 # diff
 template ::File.join(node['cassandra']['conf_dir'], 'cassandra-topology.properties') do
   cookbook node['cassandra']['templates_cookbook']
