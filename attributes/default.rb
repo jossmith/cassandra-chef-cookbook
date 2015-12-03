@@ -62,6 +62,8 @@ default['cassandra']['logback']['stdout']['pattern'] = '%-5level %date{HH:mm:ss,
 
 default['cassandra']['log4j'] = {}
 
+default['cassandra']['config_region'] = 'us-east-1'
+
 data_dir = []
 if !node['cassandra']['jbod']['slices'].nil?
   node['cassandra']['jbod']['slices'].times do |slice_number|
