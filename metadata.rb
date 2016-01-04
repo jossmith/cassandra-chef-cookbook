@@ -8,7 +8,7 @@ version '5.3'
 depends 'java'
 depends 'ulimit'
 depends 'apt'
-depends 'yum', '~> 3.0'
+depends 'yum'
 depends 'ark'
 
 %w(ubuntu centos redhat fedora amazon).each do |os|

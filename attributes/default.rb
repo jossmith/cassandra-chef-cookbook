@@ -103,8 +103,8 @@ default['cassandra']['heap_dump'] = true
 default['cassandra']['heap_dump_dir'] = nil
 
 # GC tuning options
-default['cassandra']['g1gc'] = false
-default['cassandra']['gcdetail'] = false
+default['cassandra']['jvm']['g1'] = false
+default['cassandra']['jvm']['gcdetail'] = false
 
 default['cassandra']['gc_survivor_ratio'] = 8
 default['cassandra']['gc_max_tenuring_threshold'] = 1
@@ -131,5 +131,5 @@ default['cassandra']['opscenter']['agent']['binary_name'] = 'opscenter-agent'
 default['cassandra']['opscenter']['agent']['server_host'] = nil # if nil, will use search to get IP by server role
 default['cassandra']['opscenter']['agent']['use_chef_search'] = true
 default['cassandra']['opscenter']['agent']['server_role'] = 'opscenter_server'
-default['cassandra']['opscenter']['agent']['use_ssl'] = true
+default['cassandra']['opscenter']['agent']['use_ssl'] = false
 default['cassandra']['opscenter']['agent']['conf_dir'] = '/var/lib/datastax-agent/conf'

@@ -78,6 +78,26 @@ include_recipe `cassandra-dse` uses `cassandra-dse::datastax` as the default.
 ### DataStax Enterprise
 
 You can also install the DataStax Enterprise edition by adding `node[:cassandra][:dse]` attributes according to the datastax.rb.
+ * `node[:cassandra][:package_name]`: Override default value to 'dse-full'.
+ * `node[:cassandra][:service_name]`: Override default value to 'dse'.
+
+Unencrypted Credentials:
+ * `node[:cassandra][:dse][:credentials][:username]`: Your username from Datastax website.
+ * `node[:cassandra][:dse][:credentials][:password]`: Your password from Datastax website.
+ 
+Encrypted Credentials:
+ * `node[:cassandra][:dse][:credentials][:databag][:name]`: Databag name, i.e. the value 'cassandra' will reference to `/data_bags/cassandra`.
+ * `node[:cassandra][:dse][:credentials][:databag][:item]`: Databag item, i.e. the value 'main' will reference to `/data_bags/cassandra/main.json`.
+ * `node[:cassandra][:dse][:credentials][:databag][:entry]`: The field name in the databag item, in which the credetials are written. i.e. the data_bag:
+```
+{
+  "id": "main",
+  "entry": {
+    "username": "%USERNAME%",
+    "password": "%PASSWORD%"
+  }
+}
+```
 
 There are also recipes for DataStax opscenter installation (
 `cassandra-dse::opscenter_agent_tarball`,
@@ -98,7 +118,7 @@ documentation](http://www.datastax.com/documentation/cassandra/1.2/webhelp/cassa
 ### Core Attributes
 
  * `node[:cassandra][:install_method]` (default: datastax): The installation method to use (either 'datastax' or 'tarball').
- * `node[:cassandra][:config][:cluster_name]` (default: none): Name of the cluster to create. This is required.
+ * `node[:cassandra][:cluster_name]` (default: none): Name of the cluster to create. This is required.
  * `node[:cassandra][:version]` (default: a recent patch version): version to provision
  * `node[:cassandra][:tarball][:url]` and `node[:cassandra][:tarball][:sha256sum]` specify tarball URL and SHA256 check sum used by the `cassandra::tarball` recipe.
   * Setting `node[:cassandra][:tarball][:url]` to "auto" (default) will download the tarball of the specified version from the Apache repository.
@@ -146,11 +166,11 @@ Attributes for fine tuning CMS/ParNew, the GC algorithm recommended for Cassandr
 
 Attributes for enabling G1 GC.
 
- * `node[:cassandra][:g1gc]` (default: false)
+ * `node[:cassandra][:jvm][:g1]` (default: false)
 
 Attributes for enabling GC detail/logging.
 
- * `node[:cassandra][:gcdetail]` (default: false)
+ * `node[:cassandra][:jvm][:gcdetail]` (default: false)
 
 Descriptions for these JVM parameters can be found [here](http://www.oracle.com/technetwork/java/javase/tech/vmoptions-jsp-140102.html#PerformanceTuning) and [here](http://www.oracle.com/technetwork/java/javase/gc-tuning-6-140523.html#cms.starting_a_cycle).
 
@@ -330,13 +350,14 @@ Descriptions for these JVM parameters can be found [here](http://www.oracle.com/
  * `node[:cassandra][:opscenter][:agent][:server_host]` (default: "" ). If left empty, will use search to get IP by opscenter `server_role` role.
  * `node[:cassandra][:opscenter][:agent][:server_role]` (default: `opscenter_server`). Will be use for opscenter server IP lookup if `:server_host` is not set.
  * `node[:cassandra][:opscenter][:agent][:use_chef_search]` (default: `true`). Determines whether chef search will be used for locating the data agent server.
- * `node[:cassandra][:opscenter][:agent][:use_ssl]` (default: `true`)
+ * `node[:cassandra][:opscenter][:agent][:use_ssl]` (default: `false`)
 
 #### DataStax Ops Center Agent Datastax attributes
  * `node[:cassandra][:opscenter][:agent][:package_name]` (default: "datastax-agent" ).
  * `node[:cassandra][:opscenter][:agent][:server_host]` (default: "" ). If left empty, will use search to get IP by opscenter `server_role` role.
  * `node[:cassandra][:opscenter][:agent][:server_role]` (default: `opscenter_server`). Will be use for opscenter server IP lookup if `:server_host` is not set.
- * `node[:cassandra][:opscenter][:agent][:use_ssl]` (default: `true`)
+ * `node[:cassandra][:opscenter][:agent][:use_ssl]` (default: `false`)
+
 
 ### Data Center and Rack Attributes
 
