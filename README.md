@@ -24,7 +24,7 @@ It was originally created for CI and development environments and now supports c
 
 ## Cassandra Dependencies
 
-OracleJDK 8, OpenJDK 8, OracleJDK 7, OpenJDK 7, OpenJDK 6 or Sun JDK 6.
+Modern Cassandra versions require OracleJDK 8.
 
 
 ## Berkshelf
@@ -32,7 +32,7 @@ OracleJDK 8, OpenJDK 8, OracleJDK 7, OpenJDK 7, OpenJDK 6 or Sun JDK 6.
 ### Most Recent Release
 
 ``` ruby
-cookbook 'cassandra-dse', '~> 3.5.0'
+cookbook 'cassandra-dse', '~> 4.1.0'
 ```
 
 ### From Git
@@ -46,19 +46,19 @@ cookbook 'cassandra-dse', github: 'michaelklishin/cassandra-chef-cookbook'
 
 This cookbook currently provides
 
- * Cassandra 2.x via tarball
- * Cassandra 2.x (DataStax Community Edition) via packages.
- * DataStax Enterprise (DSE)
+ * Cassandra via tarballs
+ * Cassandra (DataStax Community Edition) via apt and yum packages
+ * DataStax Enterprise (DSE) via packages
 
 ## Supported OS Distributions
 
- * Ubuntu 11.04 through 14.04 via DataStax apt repo.
+ * Ubuntu 12.04 through 15.04 via DataStax apt repo.
  * RHEL/CentOS via DataStax yum repo.
  * RHEL/CentOS/Amazon via tarball
 
 ## Support JDK Versions
 
-Cassandra 2.x requires JDK 7+, Oracle JDK is recommended.
+Cassandra 2.x requires JDK 7+, later versions require Oracle JDK 8+.
 
 ## Recipes
 
@@ -84,7 +84,7 @@ You can also install the DataStax Enterprise edition by adding `node[:cassandra]
 Unencrypted Credentials:
  * `node[:cassandra][:dse][:credentials][:username]`: Your username from Datastax website.
  * `node[:cassandra][:dse][:credentials][:password]`: Your password from Datastax website.
- 
+
 Encrypted Credentials:
  * `node[:cassandra][:dse][:credentials][:databag][:name]`: Databag name, i.e. the value 'cassandra' will reference to `/data_bags/cassandra`.
  * `node[:cassandra][:dse][:credentials][:databag][:item]`: Databag item, i.e. the value 'main' will reference to `/data_bags/cassandra/main.json`.
@@ -130,7 +130,7 @@ documentation](http://www.datastax.com/documentation/cassandra/1.2/webhelp/cassa
  * `node[:cassandra][:installation_dir]` (default: `/usr/local/cassandra`): installation directory
  * `node[:cassandra][:root_dir]` (default: `/var/lib/cassandra`): data directory root
  * `node[:cassandra][:log_dir]` (default: `/var/log/cassandra`): log directory
- * `node[:cassandra][:local_jmx]` (default: false): bind JMX listener to localhost
+ * `node[:cassandra][:local_jmx]` (default: true): bind JMX listener to localhost
  * `node[:cassandra][:jmx_port]` (default: 7199): port to listen for JMX
  * `node[:cassandra][:notify_restart]` (default: false): notify Cassandra service restart upon resource update
   * Setting `node[:cassandra][:notify_restart]` to true will restart Cassandra service upon resource change
@@ -209,6 +209,7 @@ Descriptions for these JVM parameters can be found [here](http://www.oracle.com/
  * `node[:cassandra][:config][:commitlog_sync_period_in_ms]` period for commitlog fsync when commitlog\_sync = periodic (default: 10000)
  * `node[:cassandra][:config][:commitlog_sync_batch_window_in_ms]` batch window for fsync when commitlog\_sync = batch (default: 50)
  * `node[:cassandra][:config][:commitlog_segment_size_in_mb]` Size of individual commitlog file segments (default: 32)
+ * `node[:cassandra][:config][:commitlog_total_space_in_mb]` If space gets above this value (it will round up to the next nearest segment multiple), Cassandra will flush every dirty CF in the oldest segment and remove it. (default: 4096)
  * `node[:cassandra][:config][:concurrent_reads]` Should be set to 16 * drives (default: 32)
  * `node[:cassandra][:config][:concurrent_writes]` Should be set to 8 * cpu cores (default: 32)
  * `node[:cassandra][:config][:trickle_fsync]` Enable this to avoid sudden dirty buffer flushing from impacting read latencies.  Almost always a good idea on SSDs; not necessary on platters (default: false)
@@ -380,6 +381,6 @@ Run the tests (`rake`), ensuring they all pass.
 ## Copyright & License
 
 Michael S. Klishin, Travis CI Development Team, and [contributors](https://github.com/michaelklishin/cassandra-chef-cookbook/graphs/contributors),
-2012-2015.
+2012-2016.
 
 Released under the [Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0.html).

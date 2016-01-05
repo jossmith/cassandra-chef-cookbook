@@ -1,4 +1,30 @@
-## Changes Between 4.1.0 and 4.1.x
+## Changes Between 4.1.0 and 4.2.0 (unreleased)
+
+No changes yet.
+
+
+## Changes Between 4.0.0 and 4.1.0 (Dec 28, 2015)
+
+### DSE Compatibiilty Bug Fixes
+
+For example, the `cassandra` package shouldn't be installed
+when DSE is provisioned.
+
+Contributed by Bill Warner and Dimitris Verraros.
+
+
+### OpsCenter Agent Has TLS Disabled by Default
+
+...and is now configured correctly when overridden.
+
+Contributed by Michael Belt.
+
+
+### Support Configuration of `commitlog_total_space_in_mb`
+
+The attribute `node[:cassandra][:config][:commitlog_total_space_in_mb]` takes on the cassandra default of `4096` and may be reconfigured.
+
+Contributed by Geoff Hichborn
 
 ### additional chefspec tests to at least cover all resources
 
@@ -11,7 +37,17 @@ rake unit
 
 Contributed by Bill Warner.
 
-## Changes Between 4.0.0 and 4.1.0
+### Default to localhost-only JMX
+
+The attribute `node[:cassandra][:local_jmx]` defaults to `true` now, making
+JMX listen on localhost only. This is the default since cassandra 2.0.14 and
+2.1.4 and fixes the remote code execution exploit from CVE-2015-0225.
+
+Should you choose to enable remote JMX access by setting this to false, be aware
+that this cookbook currently does not support configuring authentication for JMX,
+so you should limit access to the JMX port by other means, such as firewalling.
+
+Contributed by Bernhard Weisshuhn.
 
 ### Priam Support
 
